@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TodoList from './TodoList';
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { postTodo } from '../redux/actions/todoActions';
 
 const HomePage = () => {
 
     const [todo,setTodo] = useState('');
-    const [error,setError] = useState('');
+    const [valideError,setValideError] = useState('');
     const [success,setSuccess] = useState('');
 
 
     const dispatch = useDispatch();
+    const { isLoading, todos, error } = useSelector((state)=> state.Todos)
 
     
 
@@ -21,10 +22,25 @@ const HomePage = () => {
         }
         if(todo){
             setTodo('');
-            setError('');
+            setValideError('');
             dispatch(postTodo(todo));
         }
     }
+
+    useEffect(()=>{
+        if(todos){
+            setSuccess(todos.message)
+        }else if(error){
+            setValideError(error.message)
+        }
+    },[todos,error])
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setSuccess('');
+            setValideError('');
+        },5000)
+    },[isLoading,success,valideError])
 
   return (
     <>
@@ -34,8 +50,8 @@ const HomePage = () => {
                 <h1 className="text-2xl font-semibold text-center text-[#ff4757] mb-2 ">Todo App</h1>
 
                 <div className="w-full px-4 mt-3 mb-7">
-                   {error && ( <p className='text-center mb-2 text-[#ff4757]'>{error}</p> )}
-                   {success && ( <p className='text-center text-[#287e5a]'>{success}</p> )}
+                   {valideError && ( <p className='text-center mb-2 text-[#ff4757]'>{error}</p> )}
+                   {success && ( <p className='text-center mb-3 text-[#287e5a]'>{success}</p> )}
 
                     <form className="flex gap-x-2">
                         <input value={todo} onChange={(e)=>setTodo(e.target.value)} type="text" className='outline-none border-2 border-gray-300 w-full p-2' />

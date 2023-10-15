@@ -1,4 +1,4 @@
-import { GET_TODOS_REQUEST } from "../constants/todoConstants"
+import {  POST_TODO_FAILURE, POST_TODO_REQUEST, POST_TODO_SUCCESS } from "../constants/todoConstants"
 
 
 
@@ -10,10 +10,24 @@ const initialState = {
 
 export const todoReducer = ( state = initialState, action ) =>{
     switch(action.type){
-        case GET_TODOS_REQUEST:
+        case POST_TODO_REQUEST:
             return{
                 ...state,
                 isLoading:true,
+            };
+        case POST_TODO_SUCCESS:
+            return{
+                ...state,
+                isLoading:false,
+                todos:action.payload,
+                error:null
+            };
+        case POST_TODO_FAILURE:
+            return{
+                ...state,
+                isLoading:false,
+                todos:null,
+                error:action.payload
             };
        
         default:
