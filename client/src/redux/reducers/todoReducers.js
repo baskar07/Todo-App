@@ -15,6 +15,7 @@ export const todoReducer = ( state = initialState, action ) =>{
                 ...state,
                 isLoading:true,
             };
+       
         default:
             return  state;
     }
