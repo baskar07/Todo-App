@@ -14,8 +14,8 @@ exports.postTodo =async (req,res,next) =>{
 
 exports.getTodos = async (req,res,next)=>{
     try {
-        const todo = await Todo.find({}).sort({createdAt: -1});
-        res.status(200).json({message:"Todos get successfully.", todo});
+        const todos = await Todo.find({}).sort({createdAt: -1});
+        res.status(200).json({message:"Todos get successfully.",todos: todos});
     } catch (error) {
         res.status(400).json({message: error.message});
     }

@@ -19,9 +19,9 @@ app.use('/api', Routes);
 
 
 
-connectDatabase();
 
 app.listen(5000,(err)=>{
     if(err) console.log(`Error:${err}`);
     console.log(`Server Connected: ${PORT}`); 
 })
+connectDatabase();

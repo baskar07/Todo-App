@@ -5,7 +5,7 @@ import { todoReducer } from './reducers/todoReducers';
 
 
 const rootReducer = combineReducers({
-    Todos : todoReducer,
+    todos : todoReducer,
 })
 
 
