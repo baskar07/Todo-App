@@ -20,3 +20,17 @@ exports.getTodos = async (req,res,next)=>{
         res.status(400).json({message: error.message});
     }
 }
+
+exports.updateTodo = async (req,res,next) => {
+    try {
+        const {id } = req.params;
+        const todo = await Todo.findByIdAndUpdate(id,req.body,{new:true, runValidators:true});
+        if(!todo){
+            return res.status(404).json({message: "No Todos.."})
+        }else{
+            res.status(200).json({message:"Todo updated successfully.", todo:todo});
+        }
+    } catch (error) {
+        res.status(400).json({message: error.message});
+    }
+}
