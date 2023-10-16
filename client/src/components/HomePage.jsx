@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import TodoList from './TodoList';
 import { useDispatch,useSelector } from "react-redux";
-import { postTodo, getTodos, updateTodo } from '../redux/actions/todoActions';
+import { postTodo, getTodos, updateTodo, deleteTodo } from '../redux/actions/todoActions';
 import e from 'cors';
 
 const HomePage = () => {
 
   
 
-  const { isLoading,todos,error,isLoadingPost,successPost,errorPost, isLoadingUpdate, successUpdate,errorUpdate } = useSelector((state) => state.todos);
+  const { isLoading,todos,error,isLoadingPost,successPost,errorPost, isLoadingUpdate, successUpdate,errorUpdate, isLoadingdelete,successdelete,errordelete } = useSelector((state) => state.todos);
     
   const dispatch = useDispatch();
 
@@ -39,6 +39,7 @@ const HomePage = () => {
             setValidationError('');  
         dispatch(updateTodo({todo,todoId}));
         }
+        setIsUpdate(false);
     }
 
     useEffect(()=>{
@@ -46,20 +47,32 @@ const HomePage = () => {
             setSuccessMessage(successPost.message);
         }else if(errorPost){
             setValidationError(errorPost.message);
-        }else if(successUpdate){
+        } 
+    },[successPost,errorPost])
+
+    useEffect(()=>{
+        if(successUpdate){
             setSuccessMessage(successUpdate.message);
         }else if(errorUpdate){
             setValidationError(errorUpdate.message);
         }
-    },[successPost,errorPost,successUpdate,errorUpdate])
+    },[successUpdate,errorUpdate])
 
     useEffect(()=>{
-        dispatch(getTodos);
+        if(successdelete){
+            setSuccessMessage(successdelete.message);
+        }else if(errordelete){
+            setValidationError(errordelete.message);
+        }
+    },[successdelete,errordelete])
+
+    useEffect(()=>{
         setTimeout(() => {
             setSuccessMessage('');
             setValidationError('');
-        }, 5000);
-    },[dispatch,isLoadingPost,isLoadingUpdate,successMessage,validationError])
+        }, 3000);
+        dispatch(getTodos);
+    },[dispatch,isLoadingPost,isLoadingUpdate,isLoadingdelete,successMessage,validationError])
 
     const updateMode = (id,todo) =>{
       setIsUpdate(true);
@@ -67,7 +80,11 @@ const HomePage = () => {
       setTodoId(id);
     }
 
+    const deleteMode = (todoId) =>{
+        dispatch(deleteTodo({todoId}));
+    }
 
+    console.log(successUpdate)
   return (
     <>
 
@@ -77,23 +94,23 @@ const HomePage = () => {
 
                 <div className="w-full px-4 mt-3 mb-7">
                    {validationError &&( <p className='text-center mb-2 text-[#ff4757]'>{validationError}</p> )}
-                   {successMessage && ( <p className='text-center mb-3 text-[#287e5a]'>{successMessage}</p> )}
+                   {successMessage &&( <p className='text-center mb-3 text-[#287e5a]'>{successMessage}</p> )}
 
                     <form className="flex gap-x-2">
                         <input value={todo} onChange={(e)=>setTodo(e.target.value)} type="text" className='outline-none border-2 border-gray-300 w-full p-2' />
-                        <button onClick={isUpdate ? handleUpdate: handleSubmit}  className='bg-blue-500 text-white p-2 rounded-sm shadow-md transition-all duration-100'>
+                        <button onClick={isUpdate ? handleUpdate : handleSubmit}  className='bg-blue-500 text-white p-2 rounded-sm shadow-md transition-all duration-100'>
                             {isUpdate ? "UPDATE" : "ADD"}
                         </button>
                     </form>
                 </div>
 
                
-            { todos.length === 0 ? (
+            { todos.todos?.length === 0 ? (
                 <h2 className='text-black text-lg'>Sorry! No Todos Found.</h2> 
             ) : (
                 todos.todos?.map(item =>{
                     return(
-                        <TodoList key={item._id} isLoading={isLoading} error={error} task={item} updateMode={()=>updateMode(item._id,item.todo)} />
+                        <TodoList key={item._id} isLoading={isLoading} error={error} task={item} updateMode={()=>updateMode(item._id,item.todo)} deleteMode={()=>deleteMode(item._id)} />
                     )
                 })
             )}

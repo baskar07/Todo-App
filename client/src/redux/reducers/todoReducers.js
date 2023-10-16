@@ -1,4 +1,4 @@
-import {  GET_TODOS_FAILURE, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, POST_TODO_FAILURE, POST_TODO_REQUEST, POST_TODO_SUCCESS, UPDATE_TODO_FAILURE, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../constants/todoConstants"
+import {  DELETE_TODO_FAILURE, DELETE_TODO_REQUEST, DELETE_TODO_SUCCESS, GET_TODOS_FAILURE, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, POST_TODO_FAILURE, POST_TODO_REQUEST, POST_TODO_SUCCESS, UPDATE_TODO_FAILURE, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../constants/todoConstants"
 
 
 
@@ -79,7 +79,26 @@ export const todoReducer = ( state = initialState, action ) =>{
             isLoadingUpdate:false,
             successUpdate:null,
             errorUpdate:action.payload
-        };
+            };
+        case DELETE_TODO_REQUEST:
+            return{
+                ...state,
+                isLoadingdelete:true
+            };
+        case DELETE_TODO_SUCCESS:
+            return{
+                ...state,
+                isLoadingdelete:false,
+                successdelete:action.payload,
+                errordelete:null
+            };
+        case DELETE_TODO_FAILURE:
+            return{
+                ...state,
+                isLoadingdelete:false,
+                successdelete:null,
+                errordelete:action.payload
+            };
         default:
             return  state;
     }

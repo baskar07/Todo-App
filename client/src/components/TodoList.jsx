@@ -2,12 +2,17 @@ import React from 'react';
 import { FaEdit, FaCheck } from 'react-icons/fa';
 import { FiTrash } from 'react-icons/fi';
 
-const TodoList = ({isLoading,error,task,updateMode}) => {
+const TodoList = ({error,task,updateMode,deleteMode}) => {
+
+
+  
   return (
     <div className='w-full px-4 flex flex-col items-center mt-4' >
 
-            {/* {isLoading && ( <p className='text-center mb-3 text-[#287e5a]'>Loading...</p> )} */}
-            {error && ( <p className='text-center mb-2 text-[#ff4757]'>{error.message}</p> )}
+        
+            
+         
+            {error && ( <p className='text-center pb-2 text-[#ff4757]'>{error.message}</p> )}
     
         <div className="bg-gray-100 flex items-center gap-x-4 p-3 w-full">
            
@@ -22,11 +27,12 @@ const TodoList = ({isLoading,error,task,updateMode}) => {
                 <FaEdit onClick={updateMode} className='h-5 w-auto' color='#00abbd'/>
             </button>
 
-            <button>
+            <button onClick={deleteMode}>
                 <FiTrash className='h-5 w-auto' color='#ff4757' />
             </button>
 
         </div>
+       
     </div>
   )
 }
