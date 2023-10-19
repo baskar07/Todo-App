@@ -8,7 +8,7 @@ const connectDatabase = require('./config/db');
 dotenv.config({path:path.join(__dirname,".env")})
 const PORT = process.env.PORT;
 
-const __dirname = path.resolve();
+
 const app = express();
 
 app.use(express.static(path.join(__dirname,'/client/dist')));
