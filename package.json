@@ -7,7 +7,7 @@
     "start": "node server/index.js",
     "client": "npm start --prefix client",
     "server": "concurrently \"npm start\" \"npm run client\" ",
-    "build": "npm i && cd npm i --prefix client && npm run build --prefix client"
+    "build": "npm i &&  npm i --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
