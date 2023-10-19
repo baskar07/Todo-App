@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TodoList from './TodoList';
 import { useDispatch,useSelector } from "react-redux";
 import { postTodo, getTodos, updateTodo, deleteTodo } from '../redux/actions/todoActions';
-import e from 'cors';
+
 
 const HomePage = () => {
 
