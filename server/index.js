@@ -5,12 +5,12 @@ const cors = require('cors');
 
 const connectDatabase = require('./config/db');
 
-dotenv.config({path:path.join(__dirname,".env")})
+// dotenv.config({path:path.join(__dirname,".env")})
 const PORT = process.env.PORT;
 
 
 const app = express();
-
+ const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname,'/client/build')));
 
 app.get('*', (req,res)=>{
