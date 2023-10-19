@@ -5,7 +5,7 @@ import axios from 'axios';
 export const postTodo = (payload) =>async (dispatch) =>{
      dispatch({type:POST_TODO_REQUEST});
      try {
-        const res = await axios.post('http://localhost:5000/api/add-todo',{
+        const res = await axios.post('https://todo-app-qcaa.onrender.com/',{
             todo:payload.todo
         });
         dispatch({
@@ -23,7 +23,7 @@ export const postTodo = (payload) =>async (dispatch) =>{
 export const getTodos = async(dispatch) =>{
     dispatch({type:GET_TODOS_REQUEST});
     try {
-        const res = await axios.get('http://localhost:5000/api/get-todos');
+        const res = await axios.get('https://todo-app-qcaa.onrender.com/');
         dispatch({
             type:GET_TODOS_SUCCESS,
             payload:res.data
@@ -39,7 +39,7 @@ export const getTodos = async(dispatch) =>{
 export const updateTodo = (payload) => async(dispatch) =>{
     dispatch({type:UPDATE_TODO_REQUEST});
     try {
-        const res = await axios.put(`http://localhost:5000/api/update-todo/${payload.todoId}`,{
+        const res = await axios.put(`https://todo-app-qcaa.onrender.com/${payload.todoId}`,{
             _id:payload.todoId,
             todo:payload.todo
         });
@@ -59,7 +59,7 @@ export const updateTodo = (payload) => async(dispatch) =>{
 export const deleteTodo = (payload) =>async(dispatch)=>{
     dispatch({type:DELETE_TODO_REQUEST});
     try {
-        const res = await axios.delete(`http://localhost:5000/api/delete-todo/${payload.todoId}`);
+        const res = await axios.delete(`https://todo-app-qcaa.onrender.com/${payload.todoId}`);
         dispatch({type:DELETE_TODO_SUCCESS, payload:res.data});
     } catch (error) {
         dispatch({
